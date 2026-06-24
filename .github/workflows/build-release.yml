@@ -33,7 +33,7 @@ jobs:
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/tap-counter-upload-key.keystore
 
       - name: Build release AAB
-        run: cd android && ./gradlew bundleRelease
+        run: cd android && chmod +x gradlew && ./gradlew bundleRelease
         env:
           MYAPP_UPLOAD_STORE_FILE: tap-counter-upload-key.keystore
           MYAPP_UPLOAD_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
