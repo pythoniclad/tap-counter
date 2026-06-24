@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<body style="background:#222;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px">
+<canvas id="c" width="512" height="512"></canvas>
+<button onclick="download()" style="padding:12px 32px;font-size:18px;cursor:pointer;border-radius:8px;border:none;background:#4CAF50;color:#fff;font-weight:700">Download icon.png</button>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+
+// Background
+ctx.fillStyle = '#1A1A2E';
+ctx.fillRect(0, 0, 512, 512);
+
+// Rounded rect clip for icon shape
+function roundRect(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+// Green glowing circle
+const grd = ctx.createRadialGradient(256,240,60,256,240,180);
+grd.addColorStop(0,'#66BB6A');
+grd.addColorStop(1,'#2E7D32');
+ctx.fillStyle = grd;
+ctx.shadowColor = '#4CAF50';
+ctx.shadowBlur = 40;
+ctx.beginPath();
+ctx.arc(256, 240, 175, 0, Math.PI*2);
+ctx.fill();
+ctx.shadowBlur = 0;
+
+// TAP text
+ctx.fillStyle = '#FFFFFF';
+ctx.font = 'bold 90px Arial';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('TAP', 256, 228);
+
+// Finger tap icon (simple hand)
+ctx.fillStyle = 'rgba(255,255,255,0.25)';
+ctx.beginPath();
+ctx.arc(256, 310, 28, 0, Math.PI*2);
+ctx.fill();
+
+// Bottom label
+ctx.fillStyle = 'rgba(255,255,255,0.7)';
+ctx.font = '600 36px Arial';
+ctx.fillText('Counter', 256, 430);
+
+function download(){
+  const a = document.createElement('a');
+  a.download = 'icon.png';
+  a.href = c.toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>
