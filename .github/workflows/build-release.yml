@@ -28,6 +28,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Set version code from run number
+        run: |
+          VERSION_CODE=$((100 + ${{ github.run_number }}))
+          sed -i "s/versionCode [0-9]*/versionCode $VERSION_CODE/" android/app/build.gradle
+          echo "Version code set to $VERSION_CODE"
+
       - name: Setup Android keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/tap-counter-upload-key.keystore
