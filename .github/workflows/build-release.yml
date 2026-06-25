@@ -52,3 +52,10 @@ jobs:
           name: app-release
           path: android/app/build/outputs/bundle/release/app-release.aab
           retention-days: 30
+
+      - name: Upload native debug symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-debug-symbols
+          path: android/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
+          retention-days: 30
